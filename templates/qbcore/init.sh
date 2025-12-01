@@ -24,6 +24,15 @@ else
     echo "[QBCore Init] Warning: database.sql not found, skipping DB import."
 fi
 
+# Clone cfx server data
+echo "[QBCore Init] Cloning Cfx.re server-data repository..."
+git clone https://github.com/citizenfx/cfx-server-data.git repo-tmp
+rm -rf repo-tmp/.git
+cp -R repo-tmp/* repo-tmp/.[!.]* $TARGET_DIR/
+rm -rf repo-tmp
+
+
+
 # Optional: Clone resources if you aren't providing them in the template
 # echo "[QBCore Init] Cloning QBCore framework..."
 # git clone https://github.com/qbcore-framework/qb-core.git $TARGET_DIR/resources/qb-core
