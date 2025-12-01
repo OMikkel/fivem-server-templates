@@ -9,8 +9,8 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /opt/fivem
 
 # Download FiveM Artifacts
-ARG FIVEM_VER=17000-e0ef7490f76a24505b8bac7065df2b7075e610ba
-RUN curl -O https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/${FIVEM_VER}/fx.tar.xz \
+ARG FXSERVER_VER=17000-e0ef7490f76a24505b8bac7065df2b7075e610ba
+RUN curl -O https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/${FXSERVER_VER}/fx.tar.xz \
     && tar xf fx.tar.xz \
     && rm fx.tar.xz
 

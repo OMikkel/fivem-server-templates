@@ -1,0 +1,42 @@
+services:
+  fivem-server:
+    build:
+      context: .
+      args:
+        - FXSERVER_VER=17000-e0ef7490f76a24505b8bac7065df2b7075e610ba
+      tags:
+        - latest
+        - "17000-e0ef749"
+    container_name: fivem-server
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "30120:30120/tcp"
+      - "30120:30120/udp"
+      - "40120:40120"
+    environment:
+      - FRAMEWORK=qbcore
+      - SV_LICENSE_KEY=<LICENSEKEY>
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=fivem_db
+    volumes:
+      - ./server-data:/opt/fivem/server-data
+      - ./templates:/opt/fivem/templates:ro
+    depends_on:
+      - fivem-db
+
+  fivem-db:
+    container_name: fivem-db
+    image: mariadb:10.6
+    platform: linux/amd64
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: fivem_db
+    volumes:
+      - fivem-db-data:/var/lib/mysql
+
+volumes:
+  fivem-db-data:
