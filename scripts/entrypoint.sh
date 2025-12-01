@@ -5,12 +5,15 @@ set -e
 DATA_DIR="/opt/fivem/server-data"
 TEMPLATE_BASE="/opt/fivem/templates"
 
+ulimit -s unlimited
+
 echo "--- FiveM Docker Controller ---"
 
 # 1. Wait for Database to be ready
 # We use mysqladmin ping to check if the DB container is accepting connections
 echo "Waiting for Database ($DB_HOST)..."
-until mariadb-admin ping -h"$DB_HOST" --silent; do
+export MYSQL_PWD="$DB_PASSWORD"
+until mariadb-admin ping -h"$DB_HOST" -u"$DB_USER" --silent; do
     echo "DB not ready, sleeping..."
     sleep 2
 done

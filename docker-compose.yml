@@ -5,8 +5,8 @@ services:
       args:
         - FXSERVER_VER=17000-e0ef7490f76a24505b8bac7065df2b7075e610ba
       tags:
-        - latest
-        - "17000-e0ef749"
+        - fivem-server:latest
+        - fivem-server:17000-e0ef749
     container_name: fivem-server
     platform: linux/amd64
     restart: unless-stopped
@@ -17,20 +17,20 @@ services:
     environment:
       - FRAMEWORK=qbcore
       - SV_LICENSE_KEY=<LICENSEKEY>
-      - DB_HOST=db
+      - DB_HOST=fivem-db
       - DB_USER=root
       - DB_PASSWORD=root
       - DB_NAME=fivem_db
     volumes:
       - ./server-data:/opt/fivem/server-data
       - ./templates:/opt/fivem/templates:ro
+      - ./cpuinfo_hack.txt:/proc/cpuinfo:ro
     depends_on:
       - fivem-db
 
   fivem-db:
     container_name: fivem-db
     image: mariadb:10.6
-    platform: linux/amd64
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
